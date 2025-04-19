@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_DB: agentdb
       POSTGRES_USER: agent
-      POSTGRES_PASSWORD: Bonjour123!
+      POSTGRES_PASSWORD: ChangeIt!
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
