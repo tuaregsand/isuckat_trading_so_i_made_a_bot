@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "brain"
+version = "0.1.0"
+description = "AI reasoning service for Autonomous Memecoin AI Agent"
+authors = ["Artificialesque <oxtuareg@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.78"
+uvicorn = "^0.17"
+aio-pika = "^8.0.0"
+psycopg2-binary = "^2.9"
+openai = "^0.27"
+websockets = "*"
+mnemonic = "^0.20"
+bip-utils = "^2.6"
+base58 = "^2.1.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2"
+flake8 = "^3.9"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

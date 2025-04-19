@@ -1,0 +1,15 @@
+{
+  "name": "webthreeagent",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "trader"
+  ],
+  "description": "Autonomous Memecoin AI Agent on Solana",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

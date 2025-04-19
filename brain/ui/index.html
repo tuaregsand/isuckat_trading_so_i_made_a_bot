@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memecoin AI Agent Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Memecoin AI Agent</span>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card mb-3">
+          <div class="card-header">Control</div>
+          <div class="card-body">
+            <button id="startBtn" class="btn btn-success me-2">Start Agent</button>
+            <button id="stopBtn" class="btn btn-danger">Stop Agent</button>
+          </div>
+        </div>
+        <div class="card mb-3">
+          <div class="card-header">Wallet</div>
+          <div class="card-body">
+            <button id="genWalletBtn" class="btn btn-primary mb-2">Generate New Wallet</button>
+            <button id="importWalletBtn" class="btn btn-secondary mb-2">Import Wallet</button>
+            <pre id="wallet" class="border rounded p-2 bg-light" style="height:120px; overflow:auto;"></pre>
+          </div>
+        </div>
+        <div class="card mb-3">
+          <div class="card-header">Configuration</div>
+          <div class="card-body">
+            <form id="configForm">
+              <div class="mb-2">
+                <label class="form-label">Max Daily Loss (SOL)</label>
+                <input type="number" step="0.1" id="maxDailyLoss" class="form-control">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Blacklist (comma-separated)</label>
+                <input type="text" id="tokenBlacklist" class="form-control">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Min Liquidity (SOL)</label>
+                <input type="number" step="0.01" id="minLiquidity" class="form-control">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Max Trade Amount (SOL)</label>
+                <input type="number" step="0.1" id="maxTradeAmount" class="form-control">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Slippage (bps)</label>
+                <input type="number" id="slippage" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-primary">Save Config</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-header">Status & Logs</div>
+          <div class="card-body">
+            <pre id="status" class="border rounded p-2 bg-light" style="height:400px; overflow:auto;"></pre>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Current Configuration</div>
+          <div class="card-body">
+            <pre id="currentConfig" class="border rounded p-2 bg-light" style="height:200px; overflow:auto;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>

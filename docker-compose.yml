@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    restart: always
+    env_file:
+      - ./secrets/.env
+    environment:
+      POSTGRES_DB: agentdb
+      POSTGRES_USER: agent
+      POSTGRES_PASSWORD: Bonjour123!
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agent -d agentdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - agentnet
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - agentnet
+
+  collector:
+    build: ./collector
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+    env_file:
+      - ./secrets/.env
+    volumes:
+      - ./secrets:/app/secrets:ro
+    environment:
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+    networks:
+      - agentnet
+
+  brain:
+    build: ./brain
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+    env_file:
+      - ./secrets/.env
+    volumes:
+      - ./secrets:/app/secrets:ro
+    environment:
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+    ports:
+      - "8000:8000"
+    networks:
+      - agentnet
+
+  trader:
+    build: ./trader
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+    env_file:
+      - ./secrets/.env
+    volumes:
+      - ./secrets:/app/secrets:ro
+    environment:
+      - DATABASE_URL=postgresql://agent:${POSTGRES_PASSWORD}@postgres:5432/agentdb
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+    networks:
+      - agentnet
+
+volumes:
+  db_data:
+  rabbitmq_data:
+
+networks:
+  agentnet:
